@@ -1,8 +1,9 @@
 [build-system]
-requires = ["setuptools>=61.0", "setuptools_scm[toml]"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
+# 写法参考：https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
 name = "pyexcel"
 # 自动生成版本号，这里不用手动设置版本号
 #version = "1.0.0"
@@ -19,12 +20,20 @@ dependencies = [
     "pywin32>=305; platform_system=='Windows'"
 ]
 classifiers = [
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Operating System :: OS Independent",
-    "Development Status :: 5 - Production/Stable",
+  # How mature is this project? Common values are
+  #   3 - Alpha
+  #   4 - Beta
+  #   5 - Production/Stable
+  "Development Status :: 5 - Production/Stable",
+
+  # Indicate who your project is intended for
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Build Tools",
+
+  # Specify the Python versions you support here.
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
 ]
 
 [project.urls]
@@ -106,51 +115,69 @@ exclude_lines = [
 #directory = "coverage_report_html"
 
 
-# tox配置
+# tox 配置
 [tool.tox]
-legacy_tox_ini = """
-[tox]
-# 根据官方文档，使用setuptools打包，必须设置隔离环境
-isolated_build = True
-# scoop 配置的python，不能使用简称
-envlist = python310,python311
+requires = ["tox>=4.19"]
+env_list = ["3.12", "no-cov", "build"]
 
-
-[testenv]
-description = 在多个python环境下测试
-deps =
-    pytest
+[tool.tox.env_run_base]
+description = "Run test under {base_python}"
+deps = ["pytest", "pytest-cov"]
 # 此处参数会将 [pytest] addopts 配置覆盖掉
-commands = pytest -s -p no:faulthandler
+commands = [["pytest", "-s", "-p", "no:faulthandler"]]
+
+# 使用 tox run -e no-cov 命令执行
+[tool.tox.env.no-cov]
+description = "不生成报告，使用pytest测试"
+basepython = ["py312"]
+deps = ["pytest", "pytest-cov"]
+commands = [["pytest", "-p", "no:faulthandler"]]
+
+[tool.tox.env.build]
+# 使用 tox run -e build 命令执行
+description = "构建 whl 安装包"
+basepython = ["py312"]
+deps = ["setuptools", "build"]
+commands = [["python", "-m", "build", "-w"]]
 
 
-# 使用 tox -e no-cov 命令执行
-[testenv:no-cov]
-description = 不生成报告，使用pytest测试
-basepython = python311
-deps =
-    pytest
-commands = pytest -p no:faulthandler
+## tox配置
+#[tool.tox]
+#legacy_tox_ini = """
+#[tox]
+## 根据官方文档，使用setuptools打包，必须设置隔离环境
+#isolated_build = True
+## scoop 配置的python，不能使用简称
+#envlist = python310,python311
+#
+#
+#[testenv]
+#description = 在多个python环境下测试
+#deps =
+#    pytest
+## 此处参数会将 [pytest] addopts 配置覆盖掉
+#commands = pytest -s -p no:faulthandler
+#
+#
+## 使用 tox -e no-cov 命令执行
+#[testenv:no-cov]
+#description = 不生成报告，使用pytest测试
+#basepython = python311
+#deps =
+#    pytest
+#commands = pytest -p no:faulthandler
+#
+#
+## 使用 tox -e cov 命令执行
+#[testenv:cov]
+#description = 生成报告，使用pytest测试
+#basepython = python310
+#deps =
+#    pytest
+#    pytest-cov
+#commands = pytest -p no:faulthandler --cov --cov-report=html
+#
+#
 
-
-# 使用 tox -e cov 命令执行
-[testenv:cov]
-description = 生成报告，使用pytest测试
-basepython = python310
-deps =
-    pytest
-    pytest-cov
-commands = pytest -p no:faulthandler --cov --cov-report=html
-
-
-# 使用 tox -e build 命令执行
-[testenv:build]
-description = 构建 whl 安装包
-basepython = python310
-deps =
-    setuptools>=61.0
-    build>=0.9
-commands =
-    python -m build -w
-
-"""
+#
+#"""

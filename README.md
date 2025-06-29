@@ -75,7 +75,7 @@ pyexcel.split('test.xlsx')
 2. 安装依赖。
 
 ```shell
-pip insatall requirements.txt
+pip install -r requirements.txt
 ```
 
 3. 测试
@@ -94,5 +94,15 @@ tox
 python -m build -w
 
 # 或是使用 tox 打包创建 wheel 文件
-tox -e build
+tox run -e build
+```
+
+自动化工具
+
+```shell
+# 执行pytest
+tox run
+
+# 或是使用 tox 打包创建 wheel 文件
+tox run -e build
 ```
