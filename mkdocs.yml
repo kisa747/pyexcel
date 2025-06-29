@@ -77,7 +77,7 @@ extra_css:
 # 是否显示 Made with Material for MkDocs
 #generator: false
 # 版权声明
-copyright: Copyright &copy; 2022 - 2024 kisa747
+copyright: Copyright &copy; 2022 - 2025 kisa747
 # 显示仓库地址
 repo_url: https://github.com/kisa747/pyexcel
 edit_uri: ""
