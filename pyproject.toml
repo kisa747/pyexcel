@@ -1,5 +1,20 @@
+# 格式化代码
+[tool.black]
+line-length = 100
+skip-string-normalization = true
+include = '\.py[iw]?$'
+
+# 格式化 import 语句
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 100
+
+
 [build-system]
-requires = ["setuptools>=61.0"]
+# 参考：https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+# setuptools-scm 自动版本号功能
+requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -45,24 +60,6 @@ classifiers = [
 [tool.setuptools_scm]
 # 根据 git 信息自动将版本号写到 __version__.py
 write_to = "src/pyexcel/__version__.py"
-
-
-# black配置
-[tool.black]
-line-length = 90
-skip-string-normalization = true
-include = '\.py[iw]?$'
-
-# isor 配置
-[tool.isort]
-# Ensures the output doesn't save if the resulting file contains syntax errors.
-atomic = true
-# Compatibility with black
-profile = "black"
-line_length = 90
-# Treat project as a git repository and ignore files listed in .gitignore.
-# NOTE: This requires git to be installed and accessible from the same shell as isort.
-# skip_gitignore = true
 
 
 # mypy配置

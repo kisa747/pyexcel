@@ -6,14 +6,16 @@
 # python -m pip install -U pip
 # python -m pip install -U --upgrade-strategy eager -r requirements.txt
 
-xlwings
+black
+isort
 
 setuptools
 setuptools-scm
 wheel
 build
 
-black
+xlwings
+
 mypy
 pytest
 pytest-cov

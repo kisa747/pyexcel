@@ -85,5 +85,13 @@ theme:
   name: material
 ```
 
+## 安装 mkdocstrings
+
+自动生成文档，参考：https://mkdocstrings.github.io/python/usage/
+
+```shell
+pip install mkdocstrings[python]
+```
+
 
 

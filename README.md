@@ -87,17 +87,11 @@ mypy .
 # 代码测试
 pytest
 
-# 代码测试、代码覆盖率测试
-tox
-
 # 打包创建 wheel 文件
 python -m build -w
-
-# 或是使用 tox 打包创建 wheel 文件
-tox run -e build
 ```
 
-自动化工具
+4. 自动化工具
 
 ```shell
 # 执行pytest
