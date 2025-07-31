@@ -1,0 +1,194 @@
+[project]
+# 写法参考：https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+name = "pyexcel"
+dynamic = ["version"]  # 将 version 标记为动态生成，不用手动设置版本号
+authors = [
+    { name = "kevin", email = "kevin@example.com" },
+]
+description = "一个处理Excel文件的工具"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+requires-python = ">=3.12"
+dependencies = [
+    "xlwings>=0.28; platform_system == 'Windows'",
+]
+classifiers = [
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    "Development Status :: 5 - Production/Stable",
+
+    # Indicate who your project is intended for
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+
+    # Specify the Python versions you support here.
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.urls]
+"Homepage" = "https://kisa747.top"
+"Bug Tracker" = "https://github.com/kisa747"
+
+[dependency-groups]
+dev = ["setuptools", "setuptools-scm"]
+docs = ["mkdocs", "mkdocs-material", "mkdocstrings[python]"]
+test = ["mypy", "pytest", "pytest-cov", "tox"]
+hint = ["isort", "black"]
+
+
+[build-system]
+# 参考：https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+# setuptools-scm 自动版本号功能
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+
+# 设置 [tool.setuptools_scm] 标签，表示启用setuptools_scm
+[tool.setuptools_scm]
+# 根据 git 信息自动将版本号写到 __version__.py
+write_to = "src/pyexcel/__version__.py"
+
+# 格式化代码
+[tool.black]
+line-length = 100
+skip-string-normalization = true
+include = '\.py[iw]?$'
+
+# 格式化 import 语句
+[tool.isort]
+atomic = true
+profile = "black"
+line_length = 100
+
+
+[tool.uv]
+default-groups = "all"
+
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
+
+# mypy配置
+[tool.mypy]
+ignore_missing_imports = true
+# Disables using type information in installed packages (see PEP 561).
+# This will also disable searching for a usable Python executable.
+# 不检查已安装的包
+no_site_packages = true
+
+
+# pytest配置
+[tool.pytest.ini_options]
+#addopts = "-ra -q --strict-config --strict-markers --cov --cov-report html"
+addopts = "-ra -p no:faulthandler"
+# 源码目录
+pythonpath = ["src"]
+# 测试目录
+testpaths = ["tests"]
+
+
+# coverage配置
+[tool.coverage.run]
+# 分支覆盖
+branch = true
+# .coverage文件位置
+data_file = ".pytest_cache/.coverage"
+# 不使用 pytest-cov 插件，需要设置此参数
+source = ["src"]
+# 代码覆盖测试要排除的文件
+omit = ['tests/__init__\.py']
+[tool.coverage.report]
+# Regexes for lines to exclude from consideration
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    'pragma: no cover',
+    # Don't complain about missing debug-only code:
+    'def __repr__',
+    'if self\.debug',
+    # Don't complain if tests don't hit defensive assertion code:
+    'raise AssertionError',
+    'raise NotImplementedError',
+    # Don't complain if non-runnable code isn't run:
+    'if 0:',
+    'if __name__ == .__main__.:',
+    # Don't complain about abstract methods, they aren't run:
+    '@(abc\.)?abstractmethod',
+]
+#[tool.coverage.html]
+#directory = "coverage_report_html"
+
+
+# tox 配置
+[tool.tox]
+requires = ["tox>=4.19"]
+env_list = ["3.12", "no-cov", "build"]
+
+[tool.tox.env_run_base]
+description = "Run test under {base_python}"
+deps = ["pytest", "pytest-cov"]
+# 此处参数会将 [pytest] addopts 配置覆盖掉
+commands = [["pytest", "-s", "-p", "no:faulthandler"]]
+
+# 使用 tox run -e no-cov 命令执行
+[tool.tox.env.no-cov]
+description = "不生成报告，使用pytest测试"
+basepython = ["py312"]
+deps = ["pytest", "pytest-cov"]
+commands = [["pytest", "-p", "no:faulthandler"]]
+
+[tool.tox.env.build]
+# 使用 tox run -e build 命令执行
+description = "构建 whl 安装包"
+basepython = ["py312"]
+deps = ["setuptools", "build"]
+commands = [["python", "-m", "build", "-w"]]
+
+
+## tox配置
+#[tool.tox]
+#legacy_tox_ini = """
+#[tox]
+## 根据官方文档，使用setuptools打包，必须设置隔离环境
+#isolated_build = True
+## scoop 配置的python，不能使用简称
+#envlist = python310,python311
+#
+#
+#[testenv]
+#description = 在多个python环境下测试
+#deps =
+#    pytest
+## 此处参数会将 [pytest] addopts 配置覆盖掉
+#commands = pytest -s -p no:faulthandler
+#
+#
+## 使用 tox -e no-cov 命令执行
+#[testenv:no-cov]
+#description = 不生成报告，使用pytest测试
+#basepython = python311
+#deps =
+#    pytest
+#commands = pytest -p no:faulthandler
+#
+#
+## 使用 tox -e cov 命令执行
+#[testenv:cov]
+#description = 生成报告，使用pytest测试
+#basepython = python310
+#deps =
+#    pytest
+#    pytest-cov
+#commands = pytest -p no:faulthandler --cov --cov-report=html
+#
+#
+
+#
+#"""
