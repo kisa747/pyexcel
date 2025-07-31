@@ -78,7 +78,13 @@ git clone git@github.com:kisa747/pyexcel.git
 2. 同步环境
 
 ```shell
-uv sync
+uv sync -U
+```
+
+3. 使用
+
+```sh
+uv run -m pyexcel
 ```
 
 3. 测试

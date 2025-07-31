@@ -1,7 +1,7 @@
 # mkdocs.yml
 # mkdocs 主配置文件
 
-site_name: 智行天下
+site_name: pyexcel文档
 
 # 手动设置导航栏内容
 #nav:
