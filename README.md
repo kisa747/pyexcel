@@ -1,7 +1,7 @@
+# 说明文档
+
 [![Documentation Status](https://readthedocs.org/projects/kisa747/badge/?version=latest)](https://kisa747.readthedocs.io/zh_CN/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
-# 概述
 
 一个基于 xlwings 库，处理Excel文件的工具。
 
@@ -10,7 +10,7 @@
 ## 安装
 
 ```sh
-python -m pip install git+https://github.com/kisa747/pyexcel@0.1.0
+python -m pip install git+https://github.com/kisa747/pyexcel@main
 ```
 
 ## 快速手册
@@ -71,31 +71,32 @@ pyexcel.split('test.xlsx')
 ## 开发指南
 
 1. 克隆GitHub仓库
-```shell
-git clone git@github.com:kisa747/pyexcel.git
-```
+
+    ```shell
+    git clone git@github.com:kisa747/pyexcel.git
+    ```
 
 2. 同步环境
 
-```shell
-uv sync -U
-```
+    ```shell
+    uv sync -U
+    ```
 
 3. 使用
 
-```sh
-uv run -m pyexcel
-```
+    ```sh
+    uv run -m pyexcel
+    ```
 
-3. 测试
+4. 测试
 
-```shell
-# 静态类型检查
-uv run mypy .
+    ```shell
+    # 静态类型检查
+    uv run mypy .
 
-# 代码测试
-uv run pytest
+    # 代码测试
+    uv run pytest
 
-# 打包创建 wheel 文件
-uv build --wheel
-```
+    # 打包创建 wheel 文件
+    uv build --wheel
+    ```
