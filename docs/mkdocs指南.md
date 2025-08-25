@@ -29,7 +29,7 @@ D:\Project
         requirements.txt  # ReadtheDocs 需要的依赖文件，必须。
 ```
 
-readthedocs配置文件 `.readthedocs.yaml ` 内容：
+readthedocs配置文件 `.readthedocs.yaml` 内容：
 
 ```yaml
 # Read the Docs configuration file for MkDocs projects
@@ -87,11 +87,8 @@ theme:
 
 ## 安装 mkdocstrings
 
-自动生成文档，参考：https://mkdocstrings.github.io/python/usage/
+自动生成文档，参考：<https://mkdocstrings.github.io/python/usage/>
 
 ```shell
 pip install mkdocstrings[python]
 ```
-
-
-

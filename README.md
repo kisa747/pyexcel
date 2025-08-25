@@ -3,7 +3,7 @@
 [![Documentation Status](https://readthedocs.org/projects/kisa747/badge/?version=latest)](https://kisa747.readthedocs.io/zh_CN/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-一个基于 xlwings 库，处理Excel文件的工具。
+一个基于 xlwings 库，处理 Excel 文件的工具。
 
 要求：Python 3.10+
 
@@ -29,7 +29,7 @@ with pyexcel.Excel('test.xls') as ex:
     ex.to_xlsx('test.xlsx')
 ```
 
-### xlsx 文件导出为pdf 文件
+### xlsx 文件导出为 pdf 文件
 
 ```python
 with pyexcel.Excel('test.xlsx') as ex:
@@ -70,7 +70,7 @@ pyexcel.split('test.xlsx')
 
 ## 开发指南
 
-1. 克隆GitHub仓库
+1. 克隆 GitHub 仓库
 
     ```shell
     git clone git@github.com:kisa747/pyexcel.git

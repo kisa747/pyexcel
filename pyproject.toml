@@ -53,10 +53,12 @@ line_length = 100
 [tool.uv]
 default-groups = "all"
 
-
-[[tool.uv.index]]
+[[tool.uv.index]] # uv 默认不会读取 pip 的配置，可以配置多个地址
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 default = true
+
+[[tool.uv.index]]
+url = "https://mirrors.ustc.edu.cn/pypi/simple"
 
 
 # mypy配置
